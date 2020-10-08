@@ -1,0 +1,11 @@
+.DS_Store
+.vscode
+.vs
+.env
+/*.env
+node_modules
+dist
+tests
+.clinic
+*.pem
+ormlogs.log

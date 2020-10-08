@@ -1,0 +1,35 @@
+{
+  "name": "gyarados",
+  "version": "0.0.1",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve.dev": "nodemon dist/index.js --watch",
+    "build.dev": "rimraf dist && node ./node_modules/eslint/bin/eslint.js -c .eslintrc.js --ext .ts . && tsc -w",
+    "build.prod": "rimraf dist && node ./node_modules/eslint/bin/eslint.js -c .eslintrc.js --ext .ts . && tsc --skipLibCheck",
+    "serve.prod": "node dist/index.js",
+    "typeorm": "typeorm"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mgilangjanuar/gyarados.git"
+  },
+  "author": "M Gilang Januar <gilang@bahasa.ai>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mgilangjanuar/gyarados/issues"
+  },
+  "homepage": "https://github.com/mgilangjanuar/gyarados#readme",
+  "devDependencies": {
+    "@types/node": "^14.11.5",
+    "@typescript-eslint/eslint-plugin": "^4.4.0",
+    "@typescript-eslint/parser": "^4.4.0",
+    "eslint": "^7.10.0",
+    "nodemon": "^2.0.4",
+    "reflect-metadata": "^0.1.13",
+    "rimraf": "^3.0.2",
+    "tslint": "^6.1.3",
+    "typescript": "^4.0.3"
+  }
+}
