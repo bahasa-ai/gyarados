@@ -2,16 +2,8 @@
   "compilerOptions": {
     "module": "commonjs",
     "target": "es6",
-    "lib": [
-      "es5",
-      "es6",
-      "es2017",
-      "dom"
-    ],
-    "types": [
-      "reflect-metadata",
-      "node"
-    ],
+    "lib": ["es5", "es6", "es2017", "dom"],
+    "types": ["reflect-metadata", "node"],
     "noImplicitAny": false,
     "moduleResolution": "node",
     "esModuleInterop": true,
@@ -24,9 +16,5 @@
     "resolveJsonModule": true,
     "skipLibCheck": true
   },
-  "exclude": [
-    "tests",
-    "node_modules",
-    "dist"
-  ]
+  "exclude": ["tests", "node_modules", "dist"]
 }
