@@ -16,9 +16,10 @@ module.exports = {
     rejectUnauthorized: process.env.DB_REJECT_UNAUTHORIZED === 'true'
   } : false,
   entities: [
+    'dist/Model/*.js'
   ],
   migrations: [
-    'dist/Model/migrations/*.js'
+    'dist/Model/Migrations/*.js'
   ],
   logging: ['error'],
   synchronize: false,

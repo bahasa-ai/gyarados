@@ -1,35 +1,35 @@
 import { Connection, ConnectionOptions, createConnection, Repository } from 'typeorm'
 
-export class Model {
-  private static instance: Model
+export class DB {
+  private static instance: DB
 
   private constructor(private connection: Connection) {}
 
-  public static async init(options: ConnectionOptions, entities: any[]): Promise<Model> {
-    if (!Model.instance) {
-      Model.instance = new Model(
+  public static async init(options: ConnectionOptions, entities: any[]): Promise<DB> {
+    if (!DB.instance) {
+      DB.instance = new DB(
         await createConnection({
           ...options,
           entities
         })
       )
-      entities.map(entity => entity.useConnection(Model.instance.connection))
+      entities.map(entity => entity.useConnection(DB.instance.connection))
     }
-    return Model.instance
+    return DB.instance
   }
 
   public static get connection(): Connection {
-    if (!Model.instance.connection) {
+    if (!DB.instance.connection) {
       throw new Error('Please init DB first')
     }
-    return Model.instance.connection
+    return DB.instance.connection
   }
 
   public static getRepository<T>(model: (new () => T)): Repository<T> {
-    return Model.instance.connection.getRepository(model)
+    return DB.instance.connection.getRepository(model)
   }
 
   public static async query(query: string, parameter?: any[]): Promise<any> {
-    return Model.connection.query(query, parameter)
+    return DB.connection.query(query, parameter)
   }
 }
