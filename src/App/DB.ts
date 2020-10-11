@@ -5,15 +5,15 @@ export class DB {
 
   private constructor(private connection: Connection) {}
 
-  public static async init(options: ConnectionOptions, entities: any[]): Promise<DB> {
+  public static async init(options: ConnectionOptions): Promise<DB> {
     if (!DB.instance) {
       DB.instance = new DB(
         await createConnection({
           ...options,
-          entities
+          entities: [`${__dirname}/../Model/*.js`]
         })
       )
-      entities.map(entity => entity.useConnection(DB.instance.connection))
+      // entities.map(entity => entity.useConnection(DB.instance.connection))
     }
     return DB.instance
   }
