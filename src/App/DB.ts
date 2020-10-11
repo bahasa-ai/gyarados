@@ -1,37 +1,26 @@
 import { readFileSync } from 'fs'
-import { Connection, ConnectionOptions, createConnection, Repository } from 'typeorm'
+import { Connection, ConnectionOptions, createConnection, EntityTarget, getRepository as _getRepository, Repository } from 'typeorm'
 import { BaseModel } from '../Model/Base/BaseModel'
 
-export class DB {
-  private static instance: DB
+type Connections = 'default'
+export const getRepository = <Entity>(
+  entity: EntityTarget<Entity>, connection: Connections = 'default'): Repository<Entity> => _getRepository(entity, connection)
 
-  private constructor(private connection: Connection) {}
+class DB {
+  private _connection: Connection
 
-  public static async init(options: ConnectionOptions): Promise<DB> {
-    if (!DB.instance) {
-      DB.instance = new DB(await createConnection(options))
-    }
-    return DB.instance
-  }
+  public constructor(private _opts: ConnectionOptions, private _BaseModel?: { useConnection: (connection: Connection) => void }) {}
 
-  public static get connection(): Connection {
-    if (!DB.instance.connection) {
-      throw new Error('Please init DB first')
-    }
-    return DB.instance.connection
-  }
-
-  public static getRepository<T>(model: (new () => T)): Repository<T> {
-    return DB.instance.connection.getRepository(model)
-  }
-
-  public static async query(query: string, parameter?: any[]): Promise<any> {
-    return DB.connection.query(query, parameter)
+  public async build(): Promise<void> {
+    this._connection = await createConnection(this._opts)
+    this._BaseModel?.useConnection(this._connection)
   }
 }
 
-export default async (): Promise<void> => {
-  await DB.init({
+(async () => {
+
+  // init the default DB for each class that extends BaseModel
+  await new DB({
     name: 'default',
     type: 'postgres',
     host: process.env.DB_HOST,
@@ -48,7 +37,5 @@ export default async (): Promise<void> => {
     synchronize: false,
     logging: process.env.ENVIRONMENT === 'develop' || process.env.ENVIRONMENT === 'local',
     entities: [`${__dirname}/../Model/*.js`]
-  })
-
-  BaseModel.useConnection(DB.connection)
-}
+  }, BaseModel).build()
+})()
