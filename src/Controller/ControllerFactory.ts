@@ -198,7 +198,7 @@ export abstract class ApiModelFactory extends ApiFactory {
     const paramKeys = Object.keys(req.params).filter(p => this.parameterId.path.includes(p))
     this.parameterId.validate(req.params)
 
-    const where = paramKeys.reduce((res, key) => `${res} and ${key} = ${req.params[key]}`, 'true')
+    const where = paramKeys.reduce((res, key) => `${res} and ${key} = '${req.params[key]}'`, 'true')
 
     if (!req.body[this.name]) {
       throw { status: 400, body: { error: `${this.name} object in body is required` } }
@@ -229,7 +229,7 @@ export abstract class ApiModelFactory extends ApiFactory {
     const paramKeys = Object.keys(req.params).filter(p => this.parameterId.path.includes(p))
     this.parameterId.validate(req.params)
 
-    const where = paramKeys.reduce((res, key) => `${res} and ${key} = ${req.params[key]}`, 'true')
+    const where = paramKeys.reduce((res, key) => `${res} and ${key} = '${req.params[key]}'`, 'true')
 
     const { raw, affected } = await (this.where(req).length
       ? query.where(where).andWhere(...this.where(req))
@@ -256,7 +256,7 @@ export abstract class ApiModelFactory extends ApiFactory {
     const paramKeys = Object.keys(req.params).filter(p => this.parameterId.path.includes(p))
     this.parameterId.validate(req.params)
 
-    const where = paramKeys.reduce((res, key) => `${res} and ${key} = ${req.params[key]}`, 'true')
+    const where = paramKeys.reduce((res, key) => `${res} and ${key} = '${req.params[key]}'`, 'true')
 
     const { affected, raw } = await (this.where(req).length
       ? query.where(where).andWhere(...this.where(req))
@@ -283,7 +283,7 @@ export abstract class ApiModelFactory extends ApiFactory {
     const paramKeys = Object.keys(req.params).filter(p => this.parameterId.path.includes(p))
     this.parameterId.validate(req.params)
 
-    const where = paramKeys.reduce((res, key) => `${res} and ${key} = ${req.params[key]}`, 'true')
+    const where = paramKeys.reduce((res, key) => `${res} and ${key} = '${req.params[key]}'`, 'true')
 
     const { affected, raw } = await (this.where(req).length
       ? query.where(where).andWhere(...this.where(req))
