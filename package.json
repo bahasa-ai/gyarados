@@ -55,7 +55,7 @@
     "express": "^4.17.1",
     "express-list-endpoints": "^5.0.0",
     "jsonwebtoken": "^8.5.1",
-    "moment-timezone": "^0.5.31",
+    "moment-timezone": "^0.5.35",
     "morgan": "^1.10.0",
     "pg": "^8.4.1",
     "pluralize": "^8.0.0",
